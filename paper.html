@@ -1143,18 +1143,18 @@ OP_ENDIF</code></pre>
     are disclosed to the counterparty, if Alice broadcasts C2a, Bob will be able to take all the funds from the HTLC
     immediately. If Bob broadcasts C2b, Alice will be able to take all funds from the HTLC immediately. Note that when
     an HTLC is terminated, the older Commitment Transaction must be revoked as well.</p>
-    <figure>
-      <img src="figures/Diagram2.svg" alt="" style="width:100%">
-      <figcaption>
-        A fully revoked Commitment Transaction and terminated
-        HTLC. If either party broadcasts Commitment 2, they will lose
-        all their money to the counterparty. Other commitments (e.g. if
-        Commitment 3 is the current Commitment) are not displayed for
-        brevity.
-      </figcaption>
-    </figure>
-  
-    <p>Since both parties are able to prove the current state to each other, they can come to agreement on the current
+  <figure>
+    <img src="figures/Diagram2.svg" alt="" style="width:100%">
+    <figcaption>
+      A fully revoked Commitment Transaction and terminated
+      HTLC. If either party broadcasts Commitment 2, they will lose
+      all their money to the counterparty. Other commitments (e.g. if
+      Commitment 3 is the current Commitment) are not displayed for
+      brevity.
+    </figcaption>
+  </figure>
+
+  <p>Since both parties are able to prove the current state to each other, they can come to agreement on the current
     balance inside the channel. Since they may broadcast the current state on the blockchain, they are able to come to
     agreement on netting out and terminating the HTLC with a new Commitment Transaction.</p>
   <h2 id="htlc-formation-and-closing-order">HTLC Formation and Closing Order</h2>
@@ -1276,12 +1276,12 @@ OP_ENDIF</code></pre>
   <p>Presume Alice wishes to send 0.001 BTC to Dave. She locates a route through Bob and Carol. The transfer path would
     be Alice to Bob to Carol to Dave.</p>
 
-    <figure>
-      <img src="figures/network-fig0.svg" alt="" style="width:100%">
-      <figcaption>
-        Payment over the Lightning Network using HTLCs.
-      </figcaption>
-    </figure>
+  <figure>
+    <img src="figures/network-fig0.svg" alt="" style="width:100%">
+    <figcaption>
+      Payment over the Lightning Network using HTLCs.
+    </figcaption>
+  </figure>
   <p>When Alice sends payment to Dave through Bob and Carol, she requests from Dave hash(R) to use for this payment.
     Alice then counts the amount of hops until the recipient and uses that as the HTLC expiry. In this case, she sets
     the HTLC expiry at 3 days. Bob then creates an HTLC with Carol with an expiry of 2 days, and Carol does the same
@@ -1337,21 +1337,21 @@ OP_ENDIF</code></pre>
     receiver. The receiver, who generated the hash, should discard R and never broadcast it. If one channel along the
     path cannot be contacted, then the channels may elect to wait until the path expires, which all participants will
     likely close out the HTLC as unsettled without any payment with a new Commitment Transaction.</p>
-  
-    <figure>
-      <img src="figures/network-fig3.svg" alt="" style="width:100%">
-      <figcaption>
-        Dave creates a path back to Alice after Alice fails to send
-        funds to Dave, because Carol is uncooperative. The input R from
-        hash(R) is never brodcast by Dave, because Carol did not
-        complete her actions. If R was broadcast, Alice will
-        break-even. Dave, who controls R should never broadcast R
-        because he may not receive funds from Carol, he should let the
-        contracts expire. Alice and Bob have the option to net out and
-        close the contract early, as well, in this diagram.
-      </figcaption>
-    </figure>
-    <p>If the refund route is the same as the payment route, and there are no half-signed contracts whereby one party may
+
+  <figure>
+    <img src="figures/network-fig3.svg" alt="" style="width:100%">
+    <figcaption>
+      Dave creates a path back to Alice after Alice fails to send
+      funds to Dave, because Carol is uncooperative. The input R from
+      hash(R) is never brodcast by Dave, because Carol did not
+      complete her actions. If R was broadcast, Alice will
+      break-even. Dave, who controls R should never broadcast R
+      because he may not receive funds from Carol, he should let the
+      contracts expire. Alice and Bob have the option to net out and
+      close the contract early, as well, in this diagram.
+    </figcaption>
+  </figure>
+  <p>If the refund route is the same as the payment route, and there are no half-signed contracts whereby one party may
     be able to steal funds, it is possible to outright cancel the transaction by replacing it with a new Commitment
     Transaction starting with the most recent node who participated in the HTLC.</p>
   <p>It is also possible to clear out a channel by creating an alternate route path in which payment will occur in the
@@ -1622,6 +1622,85 @@ OP_ENDIF</code></pre>
       described in a future paper by Rusty Russell. An updated version of this paper will also include these
       constructions.</p>
   </section>
+
+  <section id="references" class="appendices">
+    <h1>References</h1>
+
+    <p>
+      [1] Satoshi Nakamoto. Bitcoin: A Peer-to-peer Electronic Cash System. <a
+        href="https://bitcoin.org/bitcoin.pdf"><code>https://bitcoin.org/bitcoin.pdf</code></a>, Oct 2008.
+    </p>
+    <p>[2] Manny Trillo. Stress Test Prepares VisaNet for
+      the Most Wonderful Time of the Year. <a
+        href="http://www.visa.com/blogarchives/us/2013/10/10/stress-test-prepares-visanet-for-the-most-wonderful-time-of-the-year/"><code>http://www.visa.com/blogarchives/us/2013/10/10/stress-test-prepares-visanet-for-the-most-wonderful-time-of-the-year/</code></a>
+      index.html, Oct 2013.
+    </p>
+    <p>[3] Bitcoin Wiki. Contracts: Example 7: Rapidly-adjusted (mi-
+      cro)payments to a pre-determined party. <a
+        href="https://en.bitcoin.it/wiki/Contracts#Example_7:_Rapidly-adjusted_.28micro.29payments_to_a_pre-determined_party"><code>https://en.bitcoin.it/wiki/Contracts#Example_7:_Rapidly-adjusted_.28micro.29payments_to_a_pre-determined_party</code></a>.
+    </p>
+    <p>[4] bitcoinj. Working with micropayment channels. <a
+        href="https://bitcoinj.github.io/working-with-micropayments"><code>https://bitcoinj.github.io/working-with-micropayments</code></a>.
+    </p>
+    <p>[5] Leslie Lamport. The Part-Time Parliament. ACM Transactions on Computer Systems, 21(2):133{169, May 1998.
+    </p>
+    <p>[6] Leslie Lamport. Time, Clocks, and the Ordering of Events in a Dis-tributed System. Communications of the ACM,
+      21(7):558{565, Jul 1978.
+    </p>
+    <p>[7] Alex Akselrod. Draft. <a
+        href="https://en.bitcoin.it/wiki/User:Aakselrod/Draft"><code>https://en.bitcoin.it/wiki/User:Aakselrod/Draft</code></a>,
+      Mar 2013.
+    </p>
+    <p>[8] Alex Akselrod. ESCHATON. <a
+        href="https://gist.github.com/aakselrod/9964667"><code>https://gist.github.com/aakselrod/9964667</code></a>, Apr
+      2014.
+    </p>
+    <p>[9] Peter Todd. Near-zero fee transactions with hub-and-spoke micro-
+      payments. <a
+        href="http://sourceforge.net/p/bitcoin/mailman/message/33144746/"><code>http://sourceforge.net/p/bitcoin/mailman/message/33144746/</code></a>,
+      Dec 2014.
+    </p>
+    <p>[10] C.J. Plooy. Combining Bitcoin and the Ripple to create a
+      fast, scalable, decentralized, anonymous, low-trust payment net-
+      work. <a
+        href="http://www.ultimatestunts.nl/bitcoin/ripple_bitcoin_draft_2.pdf"><code>http://www.ultimatestunts.nl/bitcoin/ripple_bitcoin_draft_2.pdf</code></a>,
+      Jan 2013.
+    </p>
+    <p>[11] BitPay. Impulse. <a href="http://impulse.is/impulse.pdf"><code>http://impulse.is/impulse.pdf</code></a>, Jan
+      2015.
+    </p>
+    <p>[12] Mark Friedenbach. BIP 0068: Consensus-enforced transac-
+      tion replacement signaled via sequence numbers (relative lock-
+      time). <a
+        href="https://github.com/bitcoin/bips/blob/master/bip-0068.mediawiki"><code>https://github.com/bitcoin/bips/blob/master/bip-0068.mediawiki</code></a>,
+      May 2015.
+    </p>
+    <p>[13] Mark Friedenbach BtcDrak and Eric Lombrozo. BIP 0112: CHECK-
+      SEQUENCEVERIFY. <a
+        href="https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki"><code>https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki</code></a>,
+      Aug 2015.
+    </p>
+    <p>[14] Jonas Schnelli. What does OP CHECKSEQUENCEVERIFY do?
+      <a href="http://bitcoin.stackexchange.com/a/38846"><code>http://bitcoin.stackexchange.com/a/38846</code></a>, Jul
+      2015.
+    </p>
+    <p>[15] Greg Maxwell (nullc). reddit. <a
+        href="https://www.reddit.com/r/Bitcoin/comments/37fxqd/it_looks_like_blockstream_is_working_on_the/crmr5p2"><code>https://www.reddit.com/r/Bitcoin/comments/37fxqd/it_looks_like_blockstream_is_working_on_the/crmr5p2</code></a>
+      , May 2015.
+    </p>
+    <p>[16] Gavin Andresen. BIP 0016: Pay to Script Hash. <a
+        href="https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki"><code>https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki</code></a>,
+      Jan 2012.
+    </p>
+    <p>[17] Pieter Wuille. BIP 0032: Hierarchical Deterministic Wallets. <a
+        href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki"><code>https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki</code></a>,
+      Feb 2012.
+    </p>
+    <p>[18] Ilja Gerhardt and Timo Hanke. Homomorphic Payment Addresses and
+      the Pay-to-Contract Protocol.
+      <a href="http://arxiv.org/abs/1212.3257"><code>http://arxiv.org/abs/1212.3257</code></a>, Dec 2012.</p>
+    <p>[19] Nick Szabo. Formalizing and Securing Relationships on Public Networks.
+      <a href="http://szabo.best.vwh.net/formalize.html"><code>http://szabo.best.vwh.net/formalize.html</code></a>, Sep 1997.</p>
 </body>
 
 </html>
